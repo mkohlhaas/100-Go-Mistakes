@@ -1,9 +1,9 @@
 # 100 Go Mistakes and How to Avoid Them
 
-Source code and community space of 📖 _100 Go Mistakes and How to Avoid Them_, published by Manning in August 2022.
+Source code of [`100 Go Mistakes and How to Avoid Them`](https://www.manning.com/books/100-go-mistakes-and-how-to-avoid-them).
 
 Read online: [100go.co](https://100go.co).
 
-## Powered by
-
-[![JetBrains logo.](https://resources.jetbrains.com/storage/products/company/brand/logos/jetbrains.svg)](https://jb.gg/OpenSource)
+<p align="center">
+  <img src="https://images.manning.com/book/9/5990f3c-19fb-4945-b024-7280e616773f/Harsanyi-HI.png" width="350" alt="logo">
+</p>
