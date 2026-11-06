@@ -1,3 +1,3 @@
 module github.com/teivah/100-go-mistakes
 
-go 1.21
+go 1.27
