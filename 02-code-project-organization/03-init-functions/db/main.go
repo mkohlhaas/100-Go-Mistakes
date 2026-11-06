@@ -1,4 +1,5 @@
-package main
+// Package db
+package db
 
 import (
 	"database/sql"
@@ -23,6 +24,8 @@ var db *sql.DB
 //     signaled with log.Panic (or log.Fatal), which terminates the process.
 //   - Implicit: there is no explicit call site, so the ordering of this setup
 //     relative to other packages is non-obvious.
+
+// comment out for main.go to work
 func init() {
 	dataSourceName := os.Getenv("MYSQL_DATA_SOURCE_NAME")
 	d, err := sql.Open("mysql", dataSourceName)
@@ -36,7 +39,7 @@ func init() {
 	db = d
 }
 
-// createClient is the explicit alternative to the init() above. It opens a MySQL
+// CreateClient is the explicit alternative to the init() above. It opens a MySQL
 // connection and pings the database, but returns the client and any error so the
 // caller decides when to connect and how to handle failure.
 //
@@ -44,7 +47,7 @@ func init() {
 //   - Explicit: the caller invokes it deliberately (typically from main()).
 //   - Errors are returned, not panicked.
 //   - Testable: you can call it with different data source names or use a mock.
-func createClient(dataSourceName string) (*sql.DB, error) {
+func CreateClient(dataSourceName string) (*sql.DB, error) {
 	db, err := sql.Open("mysql", dataSourceName)
 	if err != nil {
 		return nil, err

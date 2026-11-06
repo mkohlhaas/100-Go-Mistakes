@@ -57,6 +57,6 @@ func join2(s1, s2 string, max int) (string, error) {
 
 // concatenate is a stub used by both join functions.
 // In real code it would combine s1 and s2 and return an error on failure.
-func concatenate(s1, s2 string) (string, error) {
+func concatenate(_, _ string) (string, error) {
 	return "", nil
 }

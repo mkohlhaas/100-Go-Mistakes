@@ -3,7 +3,8 @@ package main
 import (
 	"fmt"
 
-	"github.com/teivah/100-go-mistakes/02-code-project-organization/03-init-functions/redis"
+	"init-functions/db"
+	"init-functions/redis"
 )
 
 // Two init() functions in the same package run in source-file order
@@ -21,6 +22,18 @@ func init() {
 }
 
 func main() {
-	err := redis.Store("foo", "bar")
-	_ = err
+	{
+		err := redis.Store("foo", "bar")
+		_ = err
+	}
+
+	{
+		sqldb, _ := db.CreateClient("Northwind")
+		_ = sqldb
+	}
 }
+
+// Output:
+// redis
+// init 1
+// init 2
