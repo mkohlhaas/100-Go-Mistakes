@@ -1,11 +1,12 @@
 package main
 
+// flexible
 type customerStorer interface {
 	StoreCustomer(Customer) error
 }
 
 type CustomerService2 struct {
-	storer customerStorer
+	storer customerStorer // flexible: ANYTHING that fulfills the interface
 }
 
 func (cs CustomerService2) CreateNewCustomer(id string) error {

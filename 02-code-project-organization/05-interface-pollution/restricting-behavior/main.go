@@ -1,5 +1,9 @@
 package main
 
+// --------- //
+// IntConfig //
+// --------- //
+
 type IntConfig struct {
 	value int
 }
@@ -12,9 +16,17 @@ func (c *IntConfig) Set(value int) {
 	c.value = value
 }
 
+// --------------- //
+// intConfigGetter //
+// --------------- //
+
 type intConfigGetter interface {
 	Get() int
 }
+
+// --- //
+// Foo //
+// --- //
 
 type Foo struct {
 	threshold intConfigGetter
@@ -28,6 +40,10 @@ func (f Foo) Bar() {
 	threshold := f.threshold.Get()
 	_ = threshold
 }
+
+// ---- //
+// Main //
+// ---- //
 
 func main() {
 	foo := NewFoo(&IntConfig{value: 42})
