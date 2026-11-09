@@ -4,6 +4,17 @@ This directory contains examples from **Mistake #5** of *100 Go Mistakes*: **int
 
 The core idea is simple: keep Go interfaces small, focused, and driven by the **consumer's** needs. Avoid large, "kitchen-sink" interfaces that force implementers to write unused methods and let callers reach into behavior they shouldn't touch.
 
+## Contents
+
+- [1. `copy/` — Narrow interfaces are not pollution](#1-copy--narrow-interfaces-are-not-pollution)
+- [2. `decoupling/` — Interface vs. concrete type](#2-decoupling--interface-vs-concrete-type)
+- [3. `restricting-behavior/` — Interface segregation](#3-restricting-behavior--interface-segregation)
+- [Types in Go](#types-in-go)
+- [Type Sets (Go 1.18+)](#type-sets-go-118)
+- [Running the examples](#running-the-examples)
+
+---
+
 The directory is split into three examples:
 
 | Directory | What it shows |
