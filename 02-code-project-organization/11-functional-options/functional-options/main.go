@@ -2,13 +2,19 @@ package main
 
 import (
 	"errors"
+	"net"
 	"net/http"
+	"strconv"
 )
 
-const defaultHTTPPort = 8080
+const (
+	defaultHTTPPort = 8080
+	defaultHost     = "localhost"
+)
 
 type options struct {
 	port *int
+	host *string
 }
 
 type Option func(options *options) error
@@ -23,36 +29,53 @@ func WithPort(port int) Option {
 	}
 }
 
-func NewServer(addr string, opts ...Option) (*http.Server, error) {
+// WithHost sets the host the server listens on.
+func WithHost(host string) Option {
+	return func(options *options) error {
+		if host == "" {
+			return errors.New("host should not be empty")
+		}
+		options.host = &host
+		return nil
+	}
+}
+
+func NewServer(opts ...Option) (*http.Server, error) {
 	var options options
 	for _, opt := range opts {
-		err := opt(&options)
-		if err != nil {
+		if err := opt(&options); err != nil {
 			return nil, err
 		}
 	}
 
-	// At this stage, the options struct is built and contains the config
-	// Therefore, we can implement our logic related to port configuration
-	var port int
-	if options.port == nil {
-		port = defaultHTTPPort
-	} else {
+	// Resolve the port, falling back to the default when unset.
+	port := defaultHTTPPort
+	if options.port != nil {
 		if *options.port == 0 {
 			port = randomPort()
 		} else {
 			port = *options.port
 		}
 	}
+	// Resolve the host, falling back to the default when unset.
+	host := defaultHost
+	if options.host != nil {
+		host = *options.host
+	}
 
-	_ = port
-	return nil, nil
+	addr := net.JoinHostPort(host, strconv.Itoa(port))
+	return &http.Server{Addr: addr}, nil
 }
 
 func client() {
-	_, _ = NewServer("localhost", WithPort(8080))
+	_, _ = NewServer(WithPort(8080), WithHost("example.com"))
 }
 
 func randomPort() int {
 	return 4 // Chosen by fair dice roll, guaranteed to be random.
+}
+
+func main() {
+	c := client
+	_ = c
 }

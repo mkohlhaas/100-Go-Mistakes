@@ -79,7 +79,17 @@ func WithPort(port int) Option {
 	}
 }
 
-func NewServer(addr string, opts ...Option) (*http.Server, error) {
+func WithHost(host string) Option {
+	return func(options *options) error {
+		if host == "" {
+			return errors.New("host should not be empty")
+		}
+		options.host = &host
+		return nil
+	}
+}
+
+func NewServer(opts ...Option) (*http.Server, error) {
 	var options options
 	for _, opt := range opts {
 		if err := opt(&options); err != nil {
@@ -94,16 +104,23 @@ func NewServer(addr string, opts ...Option) (*http.Server, error) {
 Usage collapses to a single call:
 
 ```go
-_, _ = NewServer("localhost", WithPort(8080))
+_, _ = NewServer(WithPort(8080), WithHost("example.com"))
 ```
 
-This keeps validation and defaulting in one place, needs no mutable builder, lets callers skip options entirely (`NewServer("localhost")`), and matches how Go libraries express optional configuration.
+This keeps validation and defaulting in one place, needs no mutable builder, lets callers skip options entirely (`NewServer("localhost")`), and matches how Go libraries express optional configuration. New options (like `WithHost`) can be added without changing the `NewServer` signature.
 
 ## Bottom line
 
 - Don't port Java-style mutable builders to Go.
 - Use **functional options** (`Option func(...)` with variadic `...Option`) for optional configuration.
 - Keep validation/defaulting where each option is applied; avoid a separate mutable `Build()` step.
+
+### Why isn't `Option` in the standard library?
+
+A few reasons:
+
+- **No canonical signature.** `func(options *options) error` only makes sense once you have a concrete `options` struct — and that struct is different for every package (`http.Server` has nothing in common with `tls.Config`, for example). A standard-library `Option` would have to be generic over the config type, but each package's config is typically unexported, so the type can't be shared across packages anyway.
+- **Signatures vary.** Some option functions return an error, some don't. Since functional options are a **pattern** rather than a single API contract, Go leaves each package to define its own `Option` type. That's exactly what `functional-options/main.go` does here.
 
 ## Run it
 
