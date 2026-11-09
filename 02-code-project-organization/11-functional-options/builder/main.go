@@ -62,3 +62,8 @@ func client() error {
 func randomPort() int {
 	return 4 // Chosen by fair dice roll, guaranteed to be random.
 }
+
+func main() {
+	c := client
+	_ = c
+}
