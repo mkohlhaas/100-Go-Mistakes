@@ -1,3 +1,4 @@
+// Package store
 package store
 
 func (s *Store) GetContract(id string) (Contract, error) {
