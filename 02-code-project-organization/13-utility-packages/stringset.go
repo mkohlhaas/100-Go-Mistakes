@@ -1,3 +1,4 @@
+// Package stringset
 package stringset
 
 type Set map[string]struct{}
