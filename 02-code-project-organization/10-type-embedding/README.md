@@ -85,3 +85,31 @@ Here `writeCloser` is a **named** field, so `io.WriteCloser`'s methods are *not*
 - Embedding promotes fields and methods (handy for reuse, but implicit).
 - Embedding `sync.Mutex` (or any type with methods you want to keep private) exposes those methods publicly — a common encapsulation bug.
 - Prefer unexported named fields for mutexes, and explicit delegation when you want to control exactly what your type exposes.
+
+## Should we always forego type embedding?
+
+No. Embedding is a legitimate and idiomatic Go feature — the sample warns against embedding concrete types whose methods you don't want to expose, not against embedding itself.
+
+### When embedding is appropriate
+
+- **Embedding interfaces** to satisfy them by delegation:
+  ```go
+  type MyReader struct {
+      io.Reader
+  }
+  ```
+  This is safe and common because interfaces carry no state.
+
+- **Composition / mixins** where you genuinely want full promotion of a type's fields and methods, and you control both sides of the boundary.
+
+- **Reducing boilerplate** when you want a type to transparently expose another type's entire method set.
+
+### When to avoid embedding
+
+- Embedding `sync.Mutex` / `sync.RWMutex` by value — leaks locking into your public API and risks copying a locked mutex.
+- Embedding concrete types with internal state you want to keep encapsulated.
+- When you need strict control over your public API surface — use a named field and explicit delegation instead (like the `Logger` example).
+
+### Rule of thumb
+
+Prefer **unexported named fields** for internal concerns (locking, caches, clients). Use **embedding** when you genuinely want to promote a type's methods and fields as if they were your own — most often with interfaces.
