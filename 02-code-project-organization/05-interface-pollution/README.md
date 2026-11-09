@@ -211,7 +211,7 @@ A **type set** is the set of all Go types that satisfy an interface.
 Before Go 1.18, an interface's type set was defined only by its method set (e.g. any type with a `Read` method satisfies `io.Reader`). Since Go 1.18, an interface can also restrict which **underlying types** are allowed using:
 
 - `~` — "underlying type is"
-- `\|` — union ("or")
+- `|` — union ("or")
 
 ### Example
 
