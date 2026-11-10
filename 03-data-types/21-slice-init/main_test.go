@@ -9,8 +9,8 @@ var global []Bar
 func BenchmarkConvert_EmptySlice(b *testing.B) {
 	var local []Bar
 	foos := make([]Foo, n)
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
+
+	for b.Loop() {
 		local = convertEmptySlice(foos)
 	}
 	global = local
@@ -19,8 +19,8 @@ func BenchmarkConvert_EmptySlice(b *testing.B) {
 func BenchmarkConvert_GivenCapacity(b *testing.B) {
 	var local []Bar
 	foos := make([]Foo, n)
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
+
+	for b.Loop() {
 		local = convertGivenCapacity(foos)
 	}
 	global = local
@@ -29,8 +29,8 @@ func BenchmarkConvert_GivenCapacity(b *testing.B) {
 func BenchmarkConvert_GivenLength(b *testing.B) {
 	var local []Bar
 	foos := make([]Foo, n)
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
+
+	for b.Loop() {
 		local = convertGivenLength(foos)
 	}
 	global = local

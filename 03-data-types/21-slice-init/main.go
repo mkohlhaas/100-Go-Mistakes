@@ -33,6 +33,6 @@ type Foo struct{}
 
 type Bar struct{}
 
-func fooToBar(foo Foo) Bar {
+func fooToBar(_ Foo) Bar {
 	return Bar{}
 }
