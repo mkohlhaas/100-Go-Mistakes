@@ -4,5 +4,5 @@ import "fmt"
 
 func main() {
 	sum := 100 + 0o10
-	fmt.Println(sum)
+	fmt.Println(sum) // 108
 }
