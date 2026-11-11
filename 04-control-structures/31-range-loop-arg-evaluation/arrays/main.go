@@ -7,9 +7,10 @@ func listing1() {
 	for i, v := range a {
 		a[2] = 10
 		if i == 2 {
-			fmt.Println(v)
+			fmt.Println(v) // 2
 		}
 	}
+	fmt.Println(a) // [0 1 10]
 }
 
 func listing2() {
@@ -17,9 +18,10 @@ func listing2() {
 	for i := range a {
 		a[2] = 10
 		if i == 2 {
-			fmt.Println(a[2])
+			fmt.Println(a[2]) // 10
 		}
 	}
+	fmt.Println(a) // [0 1 10]
 }
 
 func listing3() {
@@ -27,7 +29,14 @@ func listing3() {
 	for i, v := range &a {
 		a[2] = 10
 		if i == 2 {
-			fmt.Println(v)
+			fmt.Println(v) // 10
 		}
 	}
+	fmt.Println(a) // [0 1 10]
+}
+
+func main() {
+	listing1()
+	listing2()
+	listing3()
 }

@@ -21,7 +21,7 @@ func main() {
 
 	ch := ch1
 	for v := range ch {
-		fmt.Println(v)
-		ch = ch2
+		fmt.Println(v) // 0 1 2
+		ch = ch2       // ⚠️ ineffectual assignment to ch; this value of ch is never used
 	}
 }
