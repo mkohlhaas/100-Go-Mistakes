@@ -9,22 +9,22 @@ func main() {
 	// Init
 	n := 1_000_000
 	m := make(map[int][128]byte)
-	printAlloc()
+	printAlloc() // 0
 
-	// Add elements
-	for i := 0; i < n; i++ {
+	// Add n elements
+	for i := range n {
 		m[i] = randBytes()
 	}
-	printAlloc()
+	printAlloc() // 294MB
 
-	// Remove elements
-	for i := 0; i < n; i++ {
+	// Remove n elements
+	for i := range n {
 		delete(m, i)
 	}
 
 	// End
 	runtime.GC()
-	printAlloc()
+	printAlloc() // ⚠️ 287MB
 	runtime.KeepAlive(m)
 }
 
