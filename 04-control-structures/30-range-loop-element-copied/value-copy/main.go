@@ -9,30 +9,26 @@ type account struct {
 	balance float32
 }
 
+// ⚠️ Mutating the loop variable mutates only the copy, not the original slice element.
+
 func main() {
 	accounts := createAccounts()
 	for _, a := range accounts {
 		a.balance += 1000
 	}
-	fmt.Println(accounts)
+	fmt.Println(accounts) // [{100} {200} {300}]
 
 	accounts = createAccounts()
 	for i := range accounts {
 		accounts[i].balance += 1000
 	}
-	fmt.Println(accounts)
-
-	accounts = createAccounts()
-	for i := 0; i < len(accounts); i++ {
-		accounts[i].balance += 1000
-	}
-	fmt.Println(accounts)
+	fmt.Println(accounts) // [{1100} {1200} {1300}]
 
 	accountsPtr := createAccountsPtr()
 	for _, a := range accountsPtr {
 		a.balance += 1000
 	}
-	printAccountsPtr(accountsPtr)
+	printAccountsPtr(accountsPtr) // [{1100} {1200} {1300}]
 }
 
 func createAccounts() []account {
