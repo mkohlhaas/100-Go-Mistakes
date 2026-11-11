@@ -8,9 +8,9 @@ var global map[int]struct{}
 
 func BenchmarkMapWithoutSize(b *testing.B) {
 	var local map[int]struct{}
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		m := make(map[int]struct{})
-		for j := 0; j < n; j++ {
+		for j := range n {
 			m[j] = struct{}{}
 		}
 	}
@@ -19,9 +19,9 @@ func BenchmarkMapWithoutSize(b *testing.B) {
 
 func BenchmarkMapWithSize(b *testing.B) {
 	var local map[int]struct{}
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		m := make(map[int]struct{}, n)
-		for j := 0; j < n; j++ {
+		for j := range n {
 			m[j] = struct{}{}
 		}
 	}
