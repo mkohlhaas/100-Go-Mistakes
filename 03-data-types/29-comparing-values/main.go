@@ -15,28 +15,33 @@ type customer2 struct {
 }
 
 func main() {
-	cust11 := customer1{id: "x"}
-	cust12 := customer1{id: "x"}
-	fmt.Println(cust11 == cust12)
+	cust1_1 := customer1{id: "x"}
+	cust1_2 := customer1{id: "x"}
+	fmt.Println(cust1_1 == cust1_2) // true
 
-	cust21 := customer2{id: "x", operations: []float64{1.}}
-	cust22 := customer2{id: "x", operations: []float64{1.}}
+	cust2_1 := customer2{id: "x", operations: []float64{1.}}
+	cust2_2 := customer2{id: "x", operations: []float64{1.}}
 	// Doesn't compile
-	// fmt.Println(cust21 == cust22)
-	_ = cust21
-	_ = cust22
+	// fmt.Println(cust2_1 == cust2_2) // ⚠️ invalid operation: cust2_1 == cust2_2 (struct containing []float64 cannot be compared) [UndefinedOp]
+	_ = cust2_1
+	_ = cust2_2
 
 	var a any = 3
 	var b any = 3
-	fmt.Println(a == b)
+	fmt.Println(a == b) // true
 
-	var cust31 any = customer2{id: "x", operations: []float64{1.}}
-	var cust32 any = customer2{id: "x", operations: []float64{1.}}
-	fmt.Println(cust31 == cust32)
+	// var cust3_1 any = customer2{id: "x", operations: []float64{1.}}
+	// var cust3_2 any = customer2{id: "x", operations: []float64{1.}}
+	// fmt.Println(cust3_1 == cust3_2) // ⚠️ panic: runtime error: comparing uncomparable type main.customer2
 
-	cust41 := customer2{id: "x", operations: []float64{1.}}
-	cust42 := customer2{id: "x", operations: []float64{1.}}
-	fmt.Println(reflect.DeepEqual(cust41, cust42))
+	cust4_1 := customer2{id: "x", operations: []float64{1.}}
+	cust4_2 := customer2{id: "x", operations: []float64{1.}}
+	fmt.Println(reflect.DeepEqual(cust4_1, cust4_2)) // true
+	fmt.Println(cust4_1.equal(cust4_2))              // true
+
+	// different operations → false
+	cust4_3 := customer2{id: "x", operations: []float64{2.}}
+	fmt.Println(cust4_1.equal(cust4_3)) // false
 }
 
 func (a customer2) equal(b customer2) bool {
