@@ -20,7 +20,7 @@ func concat2(values []string) string {
 
 func concat3(values []string) string {
 	total := 0
-	for i := 0; i < len(values); i++ {
+	for i := range values {
 		total += len(values[i])
 	}
 

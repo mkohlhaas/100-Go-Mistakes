@@ -7,8 +7,8 @@ var global string
 func BenchmarkConcatV1(b *testing.B) {
 	var local string
 	s := getInput()
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
+
+	for b.Loop() {
 		local = concat1(s)
 	}
 	global = local
@@ -17,8 +17,8 @@ func BenchmarkConcatV1(b *testing.B) {
 func BenchmarkConcatV2(b *testing.B) {
 	var local string
 	s := getInput()
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
+
+	for b.Loop() {
 		local = concat2(s)
 	}
 	global = local
@@ -27,8 +27,8 @@ func BenchmarkConcatV2(b *testing.B) {
 func BenchmarkConcatV3(b *testing.B) {
 	var local string
 	s := getInput()
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
+
+	for b.Loop() {
 		local = concat3(s)
 	}
 	global = local
@@ -37,7 +37,7 @@ func BenchmarkConcatV3(b *testing.B) {
 func getInput() []string {
 	n := 1_000
 	s := make([]string, n)
-	for i := 0; i < n; i++ {
+	for i := range n {
 		s[i] = string(make([]byte, 1_000))
 	}
 	return s
