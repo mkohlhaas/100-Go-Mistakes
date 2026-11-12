@@ -14,6 +14,10 @@ func main() {
 	_ = f3()
 }
 
+// f1 demonstrates the mistake: defer captures status BY VALUE ("") at the
+// time the defer statements run, so reassigning status below has no effect on
+// what notify/incrementCounter print. These assignments are intentionally
+// ineffectual — they illustrate the bug.
 func f1() error {
 	var status string
 	defer notify(status)
