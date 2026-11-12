@@ -44,25 +44,6 @@ runes := []rune(s)
 fmt.Printf("%c\n", runes[0]) // €
 ```
 
-## The fix
-
-To count runes, iterate over the string with `range` (which yields runes) or
-use `utf8.RuneCountInString`:
-
-```go
-import "unicode/utf8"
-
-s := "汉"
-fmt.Println(utf8.RuneCountInString(s)) // 1
-
-for _, r := range s {
-    fmt.Printf("%c ", r) // 汉
-}
-```
-
-To index individual characters, convert to `[]rune` first; indexing a string
-directly gives you bytes, which can split a multi-byte rune in two.
-
 ## Run it
 
 ```bash
