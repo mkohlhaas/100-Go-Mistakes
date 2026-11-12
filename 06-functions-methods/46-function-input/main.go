@@ -11,22 +11,35 @@ func countEmptyLinesInFile(filename string) (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	// Handle file closure
+
+	defer func() { _ = file.Close() }()
 
 	scanner := bufio.NewScanner(file)
+	count := 0
 	for scanner.Scan() {
-		// ...
+		if scanner.Text() == "" {
+			count++
+		}
+	}
+	if err := scanner.Err(); err != nil {
+		return 0, err
 	}
 
-	return 0, nil
+	return count, nil
 }
 
 func countEmptyLines(reader io.Reader) (int, error) {
 	scanner := bufio.NewScanner(reader)
+	count := 0
 	for scanner.Scan() {
-		// ...
+		if scanner.Text() == "" {
+			count++
+		}
 	}
-	return 0, nil
+	if err := scanner.Err(); err != nil {
+		return 0, err
+	}
+	return count, nil
 }
 
 func main() {
@@ -34,5 +47,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	defer func() { _ = file.Close() }()
+
 	_, _ = countEmptyLines(file)
 }
