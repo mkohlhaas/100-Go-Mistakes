@@ -37,7 +37,7 @@ func (c Customer) Validate1() error {
 		m.Add(errors.New("name is nil"))
 	}
 
-	return m
+	return m // typed nil
 }
 
 func (c Customer) Validate2() error {
@@ -57,12 +57,13 @@ func (c Customer) Validate2() error {
 	if m != nil {
 		return m
 	}
-	return nil
+
+	return nil // truly nil
 }
 
 func main() {
 	customer := Customer{Age: 33, Name: "John"}
-	if err := customer.Validate1(); err != nil {
+	if err := customer.Validate2(); err != nil {
 		log.Fatalf("customer is invalid: %v", err)
 	}
 }
