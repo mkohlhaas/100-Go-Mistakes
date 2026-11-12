@@ -1,6 +1,14 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"maps"
+)
+
+func main() {
+	listing1()
+	listing2()
+}
 
 func listing1() {
 	m := map[int]bool{
@@ -24,6 +32,7 @@ func listing2() {
 		1: false,
 		2: true,
 	}
+
 	m2 := copyMap(m)
 
 	for k, v := range m {
@@ -38,8 +47,6 @@ func listing2() {
 
 func copyMap(m map[int]bool) map[int]bool {
 	res := make(map[int]bool, len(m))
-	for k, v := range m {
-		res[k] = v
-	}
+	maps.Copy(res, m)
 	return res
 }
