@@ -13,5 +13,5 @@ func (c *customer) add(operation float64) {
 func main() {
 	c := customer{balance: 100.0}
 	c.add(50.0)
-	fmt.Printf("balance: %.2f\n", c.balance)
+	fmt.Printf("balance: %.2f\n", c.balance) // balance: 150.00
 }
