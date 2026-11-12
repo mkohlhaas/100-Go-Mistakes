@@ -19,5 +19,5 @@ func main() {
 		balance: 100,
 	}}
 	c.add(50.)
-	fmt.Printf("balance: %.2f\n", c.data.balance)
+	fmt.Printf("balance: %.2f\n", c.data.balance) // balance: 150.00
 }
