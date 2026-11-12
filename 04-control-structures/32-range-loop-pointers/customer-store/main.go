@@ -12,15 +12,26 @@ type Store struct {
 }
 
 func main() {
-	s := Store{
-		m: make(map[string]*Customer),
-	}
-	s.storeCustomers([]Customer{
+	customers := []Customer{
 		{ID: "1", Balance: 10},
 		{ID: "2", Balance: -10},
 		{ID: "3", Balance: 0},
-	})
-	print(s.m)
+	}
+
+	fmt.Println("=== storeCustomers (buggy) ===")
+	s1 := Store{m: make(map[string]*Customer)}
+	s1.storeCustomers(customers)
+	print(s1.m)
+
+	fmt.Println("=== storeCustomers2 (copy before &) ===")
+	s2 := Store{m: make(map[string]*Customer)}
+	s2.storeCustomers2(customers)
+	print(s2.m)
+
+	fmt.Println("=== storeCustomers3 (index into slice) ===")
+	s3 := Store{m: make(map[string]*Customer)}
+	s3.storeCustomers3(customers)
+	print(s3.m)
 }
 
 func (s *Store) storeCustomers(customers []Customer) {
