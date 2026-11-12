@@ -31,6 +31,7 @@ func readFiles1(ch <-chan string) (err error) {
 	return nil
 }
 
+// with helper function
 func readFiles2(ch <-chan string) error {
 	for path := range ch {
 		if err := readFile(path); err != nil {
@@ -40,6 +41,7 @@ func readFiles2(ch <-chan string) error {
 	return nil
 }
 
+// the helper function
 func readFile(path string) (err error) {
 	file, err := os.Open(path)
 	if err != nil {
@@ -56,8 +58,10 @@ func readFile(path string) (err error) {
 	return nil
 }
 
+// with immediately-invoked closure
 func readFiles3(ch <-chan string) error {
 	for path := range ch {
+		// the closure
 		err := func() (err error) {
 			file, err := os.Open(path)
 			if err != nil {
