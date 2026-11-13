@@ -9,10 +9,10 @@ import (
 
 func main() {
 	res1, _ := read1(&dummyReader{})
-	fmt.Println(res1)
+	fmt.Println(res1) // 3072
 
 	res2, _ := read2(&dummyReader{})
-	fmt.Println(res2)
+	fmt.Println(res2) // 3072
 }
 
 func read1(r io.Reader) (int, error) {
@@ -38,7 +38,7 @@ func read2(r io.Reader) (int, error) {
 
 	ch := make(chan []byte, n)
 	wg.Add(n)
-	for i := 0; i < n; i++ {
+	for range n {
 		go func() {
 			defer wg.Done()
 			for b := range ch {
