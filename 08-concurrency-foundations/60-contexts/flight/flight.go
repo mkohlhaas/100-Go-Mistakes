@@ -1,3 +1,4 @@
+// Package flight
 package flight
 
 type Position struct {
