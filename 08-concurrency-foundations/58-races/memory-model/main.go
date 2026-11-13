@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 func listing1() {
 	i := 0
@@ -59,4 +62,37 @@ func listing6() {
 	}()
 	ch <- struct{}{}
 	fmt.Println(i)
+}
+
+func main() {
+	listings := []struct {
+		number int
+		fn     func()
+		// racy listings are run several times to make the
+		// nondeterminism visible.
+		racy bool
+	}{
+		{1, listing1, true}, // no output
+		{2, listing2, true},
+		{3, listing3, false},
+		{4, listing4, true},
+		{5, listing5, true},
+		{6, listing6, false},
+	}
+
+	const runs = 5
+	for _, listing := range listings {
+		fmt.Printf("=== listing %d ===\n", listing.number)
+		times := 1
+		if listing.racy {
+			times = runs
+		}
+		for i := 0; i < times; i++ {
+			listing.fn()
+			// Give the goroutine a chance to run so its
+			// output (if any) becomes visible before we move on.
+			time.Sleep(80 * time.Millisecond)
+		}
+		fmt.Println()
+	}
 }
