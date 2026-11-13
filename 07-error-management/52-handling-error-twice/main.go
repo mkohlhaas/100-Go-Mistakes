@@ -76,5 +76,40 @@ func GetRoute3(srcLat, srcLng, dstLat, dstLng float32) (Route, error) {
 }
 
 func getRoute(lat, lng, lat2, lng2 float32) (Route, error) {
+	_ = lat
+	_ = lng
+	_ = lat2
+	_ = lng2
 	return Route{}, nil
+}
+
+func main() {
+	valid := func(name string, f func(float32, float32, float32, float32) (Route, error)) {
+		if _, err := f(48.8566, 2.3522, 52.5200, 13.4050); err != nil {
+			fmt.Printf("%s (valid): unexpected error: %v\n", name, err)
+		} else {
+			fmt.Printf("%s (valid): success\n", name)
+		}
+	}
+
+	invalid := func(name string, f func(float32, float32, float32, float32) (Route, error)) {
+		_, err := f(200.0, 2.3522, 52.5200, 13.4050)
+		log.Printf("%s (invalid): %v", name, err)
+	}
+
+	valid("GetRoute1", GetRoute1)
+	fmt.Println()
+	invalid("GetRoute1", GetRoute1)
+
+	fmt.Println("-------------------------------------------------------------------------------")
+
+	valid("GetRoute2", GetRoute2)
+	fmt.Println()
+	invalid("GetRoute2", GetRoute2)
+
+	fmt.Println("-------------------------------------------------------------------------------")
+
+	valid("GetRoute3", GetRoute3)
+	fmt.Println()
+	invalid("GetRoute3", GetRoute3)
 }
