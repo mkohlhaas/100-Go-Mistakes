@@ -10,8 +10,8 @@ var global []int
 
 func Benchmark_sequentialMergesort(b *testing.B) {
 	var local []int
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
+
+	for b.Loop() {
 		b.StopTimer()
 		input := getRandomElements()
 		b.StartTimer()
@@ -24,8 +24,8 @@ func Benchmark_sequentialMergesort(b *testing.B) {
 
 func Benchmark_parallelMergesortV1(b *testing.B) {
 	var local []int
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
+
+	for b.Loop() {
 		b.StopTimer()
 		input := getRandomElements()
 		b.StartTimer()
@@ -38,8 +38,8 @@ func Benchmark_parallelMergesortV1(b *testing.B) {
 
 func Benchmark_parallelMergesortV2(b *testing.B) {
 	var local []int
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
+
+	for b.Loop() {
 		b.StopTimer()
 		input := getRandomElements()
 		b.StartTimer()
@@ -55,7 +55,7 @@ func getRandomElements() []int {
 	res := make([]int, n)
 	src := rand.NewSource(time.Now().UnixNano())
 	rnd := rand.New(src)
-	for i := 0; i < n; i++ {
+	for i := range n {
 		res[i] = rnd.Int()
 	}
 	return res
