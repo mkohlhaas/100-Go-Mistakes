@@ -16,6 +16,11 @@ func listing2() {
 	_ = notify()
 }
 
+func main() {
+	listing1()
+	listing2()
+}
+
 func notify() error {
 	return errors.New("failed to notify")
 }
