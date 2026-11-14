@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"maps"
 	"sync"
 )
 
@@ -11,9 +12,9 @@ func main() {
 	}
 	c.AddBalance("1", 1.0)
 	c.AddBalance("2", 3.0)
-	fmt.Println(c.AverageBalance1())
-	fmt.Println(c.AverageBalance2())
-	fmt.Println(c.AverageBalance3())
+	fmt.Println(c.AverageBalance1()) // 2
+	fmt.Println(c.AverageBalance2()) // 2
+	fmt.Println(c.AverageBalance3()) // 2
 }
 
 type Cache struct {
@@ -53,9 +54,7 @@ func (c *Cache) AverageBalance2() float64 {
 func (c *Cache) AverageBalance3() float64 {
 	c.mu.RLock()
 	m := make(map[string]float64, len(c.balances))
-	for k, v := range c.balances {
-		m[k] = v
-	}
+	maps.Copy(m, c.balances)
 	c.mu.RUnlock()
 
 	sum := 0.
