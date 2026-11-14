@@ -1,6 +1,21 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
+
+func main() {
+	fmt.Println("=== listing1: appending to a shared slice ===")
+	listing1()
+	time.Sleep(200 * time.Millisecond)
+
+	fmt.Println("=== listing2: appending to private copies ===")
+	listing2()
+	time.Sleep(200 * time.Millisecond)
+
+	fmt.Println("done")
+}
 
 func listing1() {
 	s := make([]int, 1)
