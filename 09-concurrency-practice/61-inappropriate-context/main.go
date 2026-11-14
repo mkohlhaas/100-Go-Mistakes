@@ -2,7 +2,12 @@ package main
 
 import (
 	"context"
+	"fmt"
+	"log"
 	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
 	"time"
 )
 
@@ -74,12 +79,57 @@ func (d detach) Value(key any) any {
 	return d.ctx.Value(key)
 }
 
-func doSomeTask(context.Context, *http.Request) (string, error) {
-	return "", nil
+func doSomeTask(ctx context.Context, r *http.Request) (string, error) {
+	select {
+	case <-time.After(50 * time.Millisecond):
+	case <-ctx.Done():
+		return "", ctx.Err()
+	}
+	return fmt.Sprintf("processed %s", r.URL.Path), nil
 }
 
-func publish(context.Context, string) error {
+func publish(ctx context.Context, response string) error {
+	select {
+	case <-time.After(200 * time.Millisecond):
+	case <-ctx.Done():
+		return ctx.Err()
+	}
+	log.Printf("published: %s", response)
 	return nil
 }
 
-func writeResponse(string) {}
+func writeResponse(response string) {
+	log.Printf("responded: %s", response)
+}
+
+func main() {
+	mux := http.NewServeMux()
+	mux.HandleFunc("/handler1", handler1)
+	mux.HandleFunc("/handler2", handler2)
+	mux.HandleFunc("/handler3", handler3)
+
+	server := &http.Server{
+		Addr:    ":8080",
+		Handler: mux,
+	}
+
+	// Shut down the server on SIGINT/SIGTERM.
+	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
+	defer stop()
+
+	go func() {
+		if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			log.Fatalf("server error: %v", err)
+		}
+	}()
+
+	<-ctx.Done()
+	log.Println("shutting down...")
+
+	shutdownCtx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	if err := server.Shutdown(shutdownCtx); err != nil {
+		log.Fatalf("server shutdown failed: %v", err)
+	}
+	log.Println("server stopped")
+}
