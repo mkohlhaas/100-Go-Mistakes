@@ -8,23 +8,25 @@ import (
 
 func listing1() {
 	type Donation struct {
-		mu      sync.RWMutex
+		mu      sync.Mutex
 		balance int
 	}
 	donation := &Donation{}
 
-	// Listener goroutines
+	// Listener goroutines — polling anti-pattern: unlock, sleep, re-lock.
+	// Works, but burns CPU and is slow to react.
 	f := func(goal int) {
-		donation.mu.RLock()
+		donation.mu.Lock()
 		for donation.balance < goal {
-			donation.mu.RUnlock()
-			donation.mu.RLock()
+			donation.mu.Unlock()
+			time.Sleep(time.Millisecond * 10)
+			donation.mu.Lock()
 		}
 		fmt.Printf("$%d goal reached\n", donation.balance)
-		donation.mu.RUnlock()
+		donation.mu.Unlock()
 	}
-	go f(10)
-	go f(15)
+	go f(2)
+	go f(5)
 
 	// Updater goroutine
 	go func() {
@@ -54,8 +56,8 @@ func listing2() {
 			}
 		}
 	}
-	go f(10)
-	go f(15)
+	go f(2)
+	go f(5)
 
 	// Updater goroutine
 	for {
@@ -84,8 +86,8 @@ func listing3() {
 		fmt.Printf("%d$ goal reached\n", donation.balance)
 		donation.cond.L.Unlock()
 	}
-	go f(10)
-	go f(15)
+	go f(2)
+	go f(5)
 
 	// Updater goroutine
 	for {
@@ -95,4 +97,13 @@ func listing3() {
 		donation.cond.L.Unlock()
 		donation.cond.Broadcast()
 	}
+}
+
+func main() {
+	_ = listing1 // polling anti-pattern
+	_ = listing2 // channel notification
+	listing3()   // sync.Cond (recommended)
+
+	// Keep main alive so the goroutines can run and print.
+	select {}
 }
