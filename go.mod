@@ -1,4 +1,4 @@
-module github.com/teivah/100-go-mistakes
+module 100-go-mistakes
 
 go 1.27
 
