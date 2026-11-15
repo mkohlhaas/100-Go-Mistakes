@@ -89,3 +89,10 @@ runs both the leaky (`listing1`) and the corrected (`listing2`) versions.
 * Driver: [`github.com/mattn/go-sqlite3`](https://github.com/mattn/go-sqlite3)
   (CGO, requires a C compiler such as `gcc`).
 * `go.mod` targets Go 1.24.
+
+## Related
+
+The rows-closing part of this example is also covered as a simpler standalone
+snippet in `../../../79-closing-resources/sql-rows/` (Mistake #79, "Closing
+resources"), which shows `db.Query` without a prepared statement and sits
+alongside the HTTP and file-handle siblings of #79.
