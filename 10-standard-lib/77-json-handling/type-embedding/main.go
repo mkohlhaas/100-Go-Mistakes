@@ -10,9 +10,11 @@ func main() {
 	if err := listing1(); err != nil {
 		panic(err)
 	}
+
 	if err := listing2(); err != nil {
 		panic(err)
 	}
+
 	if err := listing3(); err != nil {
 		panic(err)
 	}
