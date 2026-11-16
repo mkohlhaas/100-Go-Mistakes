@@ -2,6 +2,7 @@ package main
 
 import (
 	"io"
+	"os"
 	"sync"
 )
 
@@ -25,4 +26,8 @@ func write(w io.Writer) {
 }
 
 func getResponse([]byte) {
+}
+
+func main() {
+	write(os.Stdout)
 }
