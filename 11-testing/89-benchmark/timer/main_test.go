@@ -4,14 +4,14 @@ import "testing"
 
 func BenchmarkFoo1(b *testing.B) {
 	expensiveSetup()
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
+
+	for b.Loop() {
 		functionUnderTest()
 	}
 }
 
 func BenchmarkFoo2(b *testing.B) {
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		b.StopTimer()
 		expensiveSetup()
 		b.StartTimer()
