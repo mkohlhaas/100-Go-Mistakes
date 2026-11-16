@@ -7,7 +7,7 @@ var global [2]int64
 func BenchmarkAdd(b *testing.B) {
 	a := [2]int64{}
 	var local [2]int64
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		local = add(a)
 	}
 	global = local
@@ -16,7 +16,7 @@ func BenchmarkAdd(b *testing.B) {
 func BenchmarkAdd2(b *testing.B) {
 	a := [2]int64{}
 	var local [2]int64
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		local = add2(a)
 	}
 	global = local
