@@ -8,7 +8,7 @@ var globalResult1 Result1
 
 func BenchmarkCount1(b *testing.B) {
 	var local Result1
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		b.StopTimer()
 		inputs := make([]Input, n)
 		b.StartTimer()
@@ -21,7 +21,7 @@ var globalResult2 Result2
 
 func BenchmarkCount2(b *testing.B) {
 	var local Result2
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		b.StopTimer()
 		inputs := make([]Input, n)
 		b.StartTimer()

@@ -19,14 +19,14 @@ func count1(inputs []Input) Result1 {
 	result := Result1{}
 
 	go func() {
-		for i := 0; i < len(inputs); i++ {
+		for i := range inputs {
 			result.sumA += inputs[i].a
 		}
 		wg.Done()
 	}()
 
 	go func() {
-		for i := 0; i < len(inputs); i++ {
+		for i := range inputs {
 			result.sumB += inputs[i].b
 		}
 		wg.Done()
@@ -49,14 +49,14 @@ func count2(inputs []Input) Result2 {
 	result := Result2{}
 
 	go func() {
-		for i := 0; i < len(inputs); i++ {
+		for i := range inputs {
 			result.sumA += inputs[i].a
 		}
 		wg.Done()
 	}()
 
 	go func() {
-		for i := 0; i < len(inputs); i++ {
+		for i := range inputs {
 			result.sumB += inputs[i].b
 		}
 		wg.Done()
