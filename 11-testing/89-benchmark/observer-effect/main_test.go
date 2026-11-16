@@ -9,8 +9,8 @@ var res int64
 func BenchmarkCalculateSum512_1(b *testing.B) {
 	var sum int64
 	s := createMatrix512(rows)
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
+
+	for b.Loop() {
 		sum = calculateSum512(s)
 	}
 	res = sum
@@ -19,8 +19,8 @@ func BenchmarkCalculateSum512_1(b *testing.B) {
 func BenchmarkCalculateSum513_1(b *testing.B) {
 	var sum int64
 	s := createMatrix513(rows)
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
+
+	for b.Loop() {
 		sum = calculateSum513(s)
 	}
 	res = sum
@@ -28,7 +28,7 @@ func BenchmarkCalculateSum513_1(b *testing.B) {
 
 func BenchmarkCalculateSum512_2(b *testing.B) {
 	var sum int64
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		b.StopTimer()
 		s := createMatrix512(rows)
 		b.StartTimer()
@@ -39,7 +39,7 @@ func BenchmarkCalculateSum512_2(b *testing.B) {
 
 func BenchmarkCalculateSum513_2(b *testing.B) {
 	var sum int64
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		b.StopTimer()
 		s := createMatrix512(rows)
 		b.StartTimer()
