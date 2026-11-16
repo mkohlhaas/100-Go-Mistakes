@@ -8,7 +8,7 @@ type Foo1 struct {
 
 func sum1(foos []Foo1) int64 {
 	var s int64
-	for i := 0; i < len(foos); i++ {
+	for i := range foos {
 		s += foos[i].i
 	}
 	return s
@@ -22,7 +22,7 @@ type Foo2 struct {
 
 func sum2(foos []Foo2) int64 {
 	var s int64
-	for i := 0; i < len(foos); i++ {
+	for i := range foos {
 		s += foos[i].i
 	}
 	return s
