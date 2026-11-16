@@ -10,7 +10,7 @@ var (
 func BenchmarkSumValue(b *testing.B) {
 	b.ReportAllocs()
 	var local int
-	for i := 0; i < b.N; i++ {
+	for i := 0; b.Loop(); i++ {
 		local = sumValue(i, i)
 	}
 	globalValue = local
@@ -19,7 +19,7 @@ func BenchmarkSumValue(b *testing.B) {
 func BenchmarkSumPtr(b *testing.B) {
 	b.ReportAllocs()
 	var local *int
-	for i := 0; i < b.N; i++ {
+	for i := 0; b.Loop(); i++ {
 		local = sumPtr(i, i)
 	}
 	globalValue = *local
