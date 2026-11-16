@@ -7,6 +7,7 @@ import (
 
 func TestCache_TrimOlderThan(t *testing.T) {
 	events := []Event{
+		// ⚠️ calling time.Now()
 		{Timestamp: time.Now().Add(-20 * time.Millisecond)},
 		{Timestamp: time.Now().Add(-10 * time.Millisecond)},
 		{Timestamp: time.Now().Add(10 * time.Millisecond)},

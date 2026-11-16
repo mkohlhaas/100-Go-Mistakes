@@ -1,3 +1,4 @@
+// Package listing1
 package listing1
 
 import (
@@ -19,6 +20,7 @@ func (c *Cache) TrimOlderThan(since time.Duration) {
 	c.mu.Lock()
 	defer c.mu.Unlock()
 
+	// ⚠️ calling time.Now()
 	t := time.Now().Add(-since)
 	for i := 0; i < len(c.events); i++ {
 		if c.events[i].Timestamp.After(t) {

@@ -19,6 +19,7 @@ func (c *Cache) TrimOlderThan(now time.Time, since time.Duration) {
 	c.mu.RLock()
 	defer c.mu.RUnlock()
 
+	// ⚠️ cache does time manipulation (not its business)
 	t := now.Add(-since)
 	for i := 0; i < len(c.events); i++ {
 		if c.events[i].Timestamp.After(t) {

@@ -13,8 +13,7 @@ func TestCache_TrimOlderThan(t *testing.T) {
 	}
 	cache := &Cache{}
 	cache.Add(events)
-	cache.TrimOlderThan(parseTime(t, "2020-01-01T12:00:00.06Z").
-		Add(-15 * time.Millisecond))
+	cache.TrimOlderThan(parseTime(t, "2020-01-01T12:00:00.06Z").Add(-15 * time.Millisecond))
 	got := cache.GetAll()
 	expected := 2
 	if len(got) != expected {
