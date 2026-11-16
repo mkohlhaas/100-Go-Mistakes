@@ -6,15 +6,15 @@ import (
 )
 
 func BenchmarkAtomicStoreInt32(b *testing.B) {
-	var v int32
-	for i := 0; i < b.N; i++ {
-		atomic.StoreInt32(&v, 1)
+	var v atomic.Int32
+	for b.Loop() {
+		v.Store(1)
 	}
 }
 
 func BenchmarkAtomicStoreInt64(b *testing.B) {
-	var v int64
-	for i := 0; i < b.N; i++ {
-		atomic.StoreInt64(&v, 1)
+	var v atomic.Int64
+	for b.Loop() {
+		v.Store(1)
 	}
 }
