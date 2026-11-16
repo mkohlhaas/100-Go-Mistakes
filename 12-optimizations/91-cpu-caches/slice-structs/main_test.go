@@ -8,7 +8,7 @@ const n = 1_000_000
 
 func BenchmarkSumFoo(b *testing.B) {
 	var local int64
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		b.StopTimer()
 		s := make([]Foo, n)
 		b.StartTimer()
@@ -19,7 +19,7 @@ func BenchmarkSumFoo(b *testing.B) {
 
 func BenchmarkSumBar(b *testing.B) {
 	var local int64
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		b.StopTimer()
 		bar := Bar{
 			a: make([]int64, n),

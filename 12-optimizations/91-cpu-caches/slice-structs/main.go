@@ -2,12 +2,12 @@ package main
 
 type Foo struct {
 	a int64
-	b int64
+	_ int64
 }
 
 func sumFoo(foos []Foo) int64 {
 	var total int64
-	for i := 0; i < len(foos); i++ {
+	for i := range foos {
 		total += foos[i].a
 	}
 	return total
@@ -20,7 +20,7 @@ type Bar struct {
 
 func sumBar(bar Bar) int64 {
 	var total int64
-	for i := 0; i < len(bar.a); i++ {
+	for i := range bar.a {
 		total += bar.a[i]
 	}
 	return total
