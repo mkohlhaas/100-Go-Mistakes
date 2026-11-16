@@ -1,7 +1,7 @@
 package main
 
 import (
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -19,7 +19,7 @@ func TestHandler(t *testing.T) {
 		t.Errorf("api version: expected 1.0, got %s", got)
 	}
 
-	body, _ := ioutil.ReadAll(w.Body)
+	body, _ := io.ReadAll(w.Body)
 	if got := string(body); got != "hello foo" {
 		t.Errorf("body: expected hello foo, got %s", got)
 	}

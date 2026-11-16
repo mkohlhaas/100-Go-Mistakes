@@ -9,7 +9,13 @@ type LowerCaseReader struct {
 }
 
 func (l LowerCaseReader) Read(p []byte) (int, error) {
-	return 0, nil
+	n, err := l.reader.Read(p)
+	for i := range n {
+		if p[i] >= 'A' && p[i] <= 'Z' {
+			p[i] += 'a' - 'A'
+		}
+	}
+	return n, err
 }
 
 func foo1(r io.Reader) error {
