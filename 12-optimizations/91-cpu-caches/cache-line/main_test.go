@@ -6,7 +6,7 @@ var global int64
 
 func BenchmarkSum2(b *testing.B) {
 	var local int64
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		b.StopTimer()
 		s := make([]int64, 1_000_000)
 		b.StartTimer()
@@ -17,7 +17,7 @@ func BenchmarkSum2(b *testing.B) {
 
 func BenchmarkSum8(b *testing.B) {
 	var local int64
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		b.StopTimer()
 		s := make([]int64, 1_000_000)
 		b.StartTimer()
