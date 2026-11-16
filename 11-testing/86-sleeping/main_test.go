@@ -41,8 +41,9 @@ func TestGetBestFoo(t *testing.T) {
 }
 
 func assert(t *testing.T, assertion func() bool,
-	maxRetry int, waitTime time.Duration) {
-	for i := 0; i < maxRetry; i++ {
+	maxRetry int, waitTime time.Duration,
+) {
+	for range maxRetry {
 		if assertion() {
 			return
 		}
